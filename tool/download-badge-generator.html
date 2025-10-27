@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下載按鈕圖片生成器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background: linear-gradient(135deg, #1a0f2e 0%, #4a1942 50%, #1a0f2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffd700, #ff6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .canvas-container {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        canvas {
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #f4d03f, #f39c12);
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(244, 208, 63, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>下載按鈕生成器</h1>
+        
+        <div class="canvas-container">
+            <h3>APP Store 按鈕</h3>
+            <canvas id="appStoreCanvas" width="180" height="60"></canvas>
+        </div>
+        
+        <div class="canvas-container">
+            <h3>Google Play 按鈕</h3>
+            <canvas id="googlePlayCanvas" width="180" height="60"></canvas>
+        </div>
+        
+        <div class="canvas-container">
+            <h3>PC版下載 按鈕</h3>
+            <canvas id="pcDownloadCanvas" width="180" height="60"></canvas>
+        </div>
+        
+        <div>
+            <button class="btn" onclick="generateBadges()">生成所有按鈕</button>
+            <button class="btn" onclick="downloadAppStore()">下載 APP Store</button>
+            <button class="btn" onclick="downloadGooglePlay()">下載 Google Play</button>
+            <button class="btn" onclick="downloadPC()">下載 PC版</button>
+        </div>
+    </div>
+
+    <script>
+        function generateBadges() {
+            generateAppStoreBadge();
+            generateGooglePlayBadge();
+            generatePCDownloadBadge();
+        }
+
+        function generateAppStoreBadge() {
+            const canvas = document.getElementById('appStoreCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 設定黑色背景
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 設定圓角
+            ctx.save();
+            ctx.beginPath();
+            roundRect(ctx, 0, 0, canvas.width, canvas.height, 8);
+            ctx.clip();
+            
+            // 重新繪製背景
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製蘋果 logo (簡化版)
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(25, 30, 8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 蘋果葉子
+            ctx.beginPath();
+            ctx.arc(27, 25, 3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 主要文字
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 10px Arial, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('Download on the', 45, 20);
+            
+            ctx.font = 'bold 16px Arial, sans-serif';
+            ctx.fillText('App Store', 45, 38);
+            
+            ctx.restore();
+        }
+
+        function generateGooglePlayBadge() {
+            const canvas = document.getElementById('googlePlayCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 設定黑色背景
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 設定圓角
+            ctx.save();
+            ctx.beginPath();
+            roundRect(ctx, 0, 0, canvas.width, canvas.height, 8);
+            ctx.clip();
+            
+            // 重新繪製背景
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製 Google Play 三角形 logo (簡化版)
+            // 藍色三角
+            ctx.fillStyle = '#4285F4';
+            ctx.beginPath();
+            ctx.moveTo(15, 18);
+            ctx.lineTo(25, 24);
+            ctx.lineTo(25, 12);
+            ctx.closePath();
+            ctx.fill();
+            
+            // 綠色三角
+            ctx.fillStyle = '#34A853';
+            ctx.beginPath();
+            ctx.moveTo(25, 24);
+            ctx.lineTo(35, 30);
+            ctx.lineTo(25, 36);
+            ctx.closePath();
+            ctx.fill();
+            
+            // 黃色三角
+            ctx.fillStyle = '#FBBC05';
+            ctx.beginPath();
+            ctx.moveTo(25, 36);
+            ctx.lineTo(35, 42);
+            ctx.lineTo(15, 42);
+            ctx.closePath();
+            ctx.fill();
+            
+            // 紅色三角
+            ctx.fillStyle = '#EA4335';
+            ctx.beginPath();
+            ctx.moveTo(15, 18);
+            ctx.lineTo(25, 12);
+            ctx.lineTo(15, 6);
+            ctx.closePath();
+            ctx.fill();
+            
+            // 主要文字
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 10px Arial, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('GET IT ON', 45, 20);
+            
+            ctx.font = 'bold 16px Arial, sans-serif';
+            ctx.fillText('Google Play', 45, 38);
+            
+            ctx.restore();
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function downloadAppStore() {
+            const canvas = document.getElementById('appStoreCanvas');
+            const link = document.createElement('a');
+            link.download = 'app-store-badge.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadGooglePlay() {
+            const canvas = document.getElementById('googlePlayCanvas');
+            const link = document.createElement('a');
+            link.download = 'google-play-badge.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function generatePCDownloadBadge() {
+            const canvas = document.getElementById('pcDownloadCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 設定黑色背景
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 設定圓角
+            ctx.save();
+            ctx.beginPath();
+            roundRect(ctx, 0, 0, canvas.width, canvas.height, 8);
+            ctx.clip();
+            
+            // 重新繪製背景
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製電腦圖示 (簡化版)
+            // 螢幕
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(15, 15, 20, 15);
+            
+            // 螢幕邊框
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(15, 15, 20, 15);
+            
+            // 底座
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(20, 30, 10, 3);
+            ctx.fillRect(18, 33, 14, 2);
+            
+            // 鍵盤 (簡化)
+            ctx.fillRect(12, 38, 26, 8);
+            
+            // 主要文字
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 10px Arial, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('DOWNLOAD FOR', 45, 20);
+            
+            ctx.font = 'bold 16px Arial, sans-serif';
+            ctx.fillText('PC / Windows', 45, 38);
+            
+            ctx.restore();
+        }
+
+        function downloadPC() {
+            const canvas = document.getElementById('pcDownloadCanvas');
+            const link = document.createElement('a');
+            link.download = 'pc-download-badge.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // 頁面載入時自動生成
+        window.onload = function() {
+            generateBadges();
+        };
+    </script>
+</body>
+</html>

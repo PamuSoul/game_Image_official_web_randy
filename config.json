@@ -1,0 +1,104 @@
+{
+  "gameInfo": {
+    "title": "夢遊紅塵",
+    "subtitle": "仙劍情緣漫",
+    "description": "踏入這個如夢似幻的仙俠世界，體驗古風武俠的浪漫情懷",
+    "version": "1.0.0",
+    "releaseDate": "2025-10-04"
+  },
+  "features": [
+    {
+      "icon": "⚔️",
+      "title": "真實戰鬥",
+      "description": "體驗流暢的即時戰鬥系統，感受武俠世界的刀光劍影"
+    },
+    {
+      "icon": "💕",
+      "title": "情緣系統", 
+      "description": "邂逅紅顏知己，共譜一段動人的仙俠愛情故事"
+    },
+    {
+      "icon": "🏔️",
+      "title": "開放世界",
+      "description": "探索廣闊的仙俠世界，發現隱藏的秘境與寶藏"
+    },
+    {
+      "icon": "✨",
+      "title": "修仙養成",
+      "description": "修煉各種仙法，提升實力，踏上成仙之路"
+    }
+  ],
+  "characters": [
+    {
+      "name": "地藏",
+      "description": "天真善良的仙女，擁有治癒之力",
+      "image": "character1.jpg"
+    },
+    {
+      "name": "神策", 
+      "description": "劍術超群的俊美少年，正義感十足",
+      "image": "character2.png"
+    },
+    {
+      "name": "龍吟",
+      "description": "神秘莫測的暗影殺手，行蹤詭秘", 
+      "image": "character3.jpg"
+    }
+  ],
+  "screenshots": [
+    {
+      "title": "金蘭結義",
+      "image": "screenshot1.jpg"
+    },
+    {
+      "title": "跨服BOSS", 
+      "image": "screenshot2.jpg"
+    },
+    {
+      "title": "五行",
+      "image": "screenshot3.jpg"
+    },
+    {
+      "title": "歸墟",
+      "image": "screenshot4.jpg"
+    }
+  ],
+  "news": [
+    {
+      "date": "2025.10.01",
+      "title": "新版本「天劫降臨」即將上線",
+      "content": "全新劇情章節，更多挑戰等待著你..."
+    },
+    {
+      "date": "2025.09.28", 
+      "title": "中秋節特別活動開始",
+      "content": "參與活動獲得限定服裝和道具..."
+    },
+    {
+      "date": "2025.09.25",
+      "title": "新角色「月影仙子」登場", 
+      "content": "神秘的月系法師即將加入戰鬥..."
+    }
+  ],
+  "downloadLinks": {
+    "ios": "https://apps.apple.com/app/your-game",
+    "android": "https://play.google.com/store/apps/details?id=your.game",
+    "pc": "https://your-website.com/download/pc"
+  },
+  "socialLinks": {
+    "weibo": "https://weibo.com/yourgame",
+    "wechat": "your_wechat_id", 
+    "qq": "123456789",
+    "discord": "https://discord.gg/yourgame"
+  },
+  "contact": {
+    "email": "support@yourgame.com",
+    "phone": "+886-2-1234-5678",
+    "address": "台北市信義區某某路123號"
+  },
+  "seo": {
+    "keywords": "仙俠遊戲, MMORPG, 古風遊戲, 武俠, 修仙",
+    "description": "夢遊紅塵是一款精美的古風仙俠MMORPG遊戲，擁有豐富的劇情、精美的畫面和創新的遊戲玩法。",
+    "author": "Your Game Studio"
+  }
+}

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夢遊紅塵 - 主角色圖片生成器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background: linear-gradient(135deg, #1a0f2e 0%, #4a1942 50%, #1a0f2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffd700, #ff6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #b39ddb;
+        }
+
+        .canvas-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        canvas {
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #f4d03f, #f39c12);
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            margin: 0 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(244, 208, 63, 0.4);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>夢遊紅塵</h1>
+        <p class="subtitle">主角色圖片生成器</p>
+        
+        <div class="canvas-container">
+            <canvas id="mainCanvas" width="400" height="400"></canvas>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn" onclick="generateMainCharacter()">生成主角色圖片</button>
+            <button class="btn secondary" onclick="downloadImage()">下載圖片</button>
+            <button class="btn secondary" onclick="generateVariation()">生成變體</button>
+        </div>
+        
+        <div class="info">
+            <p>點擊「生成主角色圖片」創建符合遊戲風格的主角色形象</p>
+            <p>生成後可下載並替換網站中的 main-character.png</p>
+        </div>
+    </div>
+
+    <script>
+        let currentVariation = 0;
+        
+        function generateMainCharacter() {
+            const canvas = document.getElementById('mainCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 主角色配色方案
+            const colors = {
+                bg1: '#1a0f2e',
+                bg2: '#4a1942', 
+                bg3: '#6b2c5f',
+                bg4: '#2d1b3d',
+                robe: '#ffd700',
+                robeAccent: '#ffed4e',
+                robeShadow: '#daa520',
+                accent: '#8a2be2',
+                accentLight: '#9370db',
+                hair: '#2c1810',
+                hairHighlight: '#3d2818',
+                skin: '#f5deb3',
+                skinHighlight: '#fff8dc',
+                weapon: '#e6e6fa',
+                weaponHighlight: '#f0f0f0',
+                glow: '#ffd700',
+                glowPurple: '#da70d6',
+                shadow: 'rgba(0, 0, 0, 0.4)',
+                lightShadow: 'rgba(0, 0, 0, 0.2)'
+            };
+            
+            // 創建動態漸變背景
+            const bgGradient = ctx.createRadialGradient(200, 200, 0, 200, 200, 200);
+            bgGradient.addColorStop(0, colors.bg1);
+            bgGradient.addColorStop(0.3, colors.bg2);
+            bgGradient.addColorStop(0.6, colors.bg3);
+            bgGradient.addColorStop(0.9, colors.bg4);
+            bgGradient.addColorStop(1, colors.bg1);
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製多層光環效果
+            for(let i = 0; i < 8; i++) {
+                const glowGradient = ctx.createRadialGradient(200, 200, i * 15, 200, 200, 160 - i * 12);
+                const alpha = 0.3 - i * 0.035;
+                glowGradient.addColorStop(0, `rgba(255, 215, 0, ${alpha})`);
+                glowGradient.addColorStop(0.4, `rgba(138, 43, 226, ${alpha * 0.8})`);
+                glowGradient.addColorStop(0.8, `rgba(218, 112, 214, ${alpha * 0.6})`);
+                glowGradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                ctx.fillStyle = glowGradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // 繪製仙氣飄帶和雲霧效果
+            ctx.globalAlpha = 0.7;
+            drawMysticalRibbons(ctx, colors);
+            ctx.globalAlpha = 1;
+            
+            // 繪製主角身形
+            drawMainCharacterFigure(ctx, colors);
+            
+            // 繪製飄散元素
+            ctx.globalAlpha = 0.8;
+            drawFloatingElements(ctx, colors);
+            ctx.globalAlpha = 1;
+            
+            // 底部光效
+            const bottomGlow = ctx.createLinearGradient(0, 300, 0, 400);
+            bottomGlow.addColorStop(0, 'rgba(255, 215, 0, 0.6)');
+            bottomGlow.addColorStop(0.3, 'rgba(138, 43, 226, 0.4)');
+            bottomGlow.addColorStop(0.7, 'rgba(218, 112, 214, 0.3)');
+            bottomGlow.addColorStop(1, 'rgba(255, 215, 0, 0)');
+            ctx.fillStyle = bottomGlow;
+            ctx.fillRect(0, 300, canvas.width, 100);
+            
+            // 繪製標題文字
+            drawTitle(ctx, colors);
+            
+            console.log('主角色圖片生成完成');
+        }
+        
+        function drawMysticalRibbons(ctx, colors) {
+            // 上方飄帶
+            ctx.strokeStyle = colors.glow;
+            ctx.lineWidth = 4;
+            ctx.shadowColor = colors.glow;
+            ctx.shadowBlur = 8;
+            
+            ctx.beginPath();
+            ctx.bezierCurveTo(50, 60, 120, 40, 180, 55);
+            ctx.bezierCurveTo(240, 70, 300, 50, 350, 75);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.bezierCurveTo(30, 150, 100, 130, 160, 145);
+            ctx.bezierCurveTo(220, 160, 280, 140, 370, 165);
+            ctx.stroke();
+            
+            // 紫色飄帶
+            ctx.strokeStyle = colors.glowPurple;
+            ctx.lineWidth = 3;
+            ctx.shadowColor = colors.glowPurple;
+            
+            ctx.beginPath();
+            ctx.bezierCurveTo(40, 250, 110, 230, 170, 245);
+            ctx.bezierCurveTo(230, 260, 290, 240, 360, 265);
+            ctx.stroke();
+            
+            ctx.shadowBlur = 0;
+        }
+        
+        function drawMainCharacterFigure(ctx, colors) {
+            const centerX = 200;
+            const centerY = 200;
+            
+            // 身體陰影
+            ctx.fillStyle = colors.shadow;
+            ctx.fillRect(centerX - 40, centerY + 20, 80, 120);
+            
+            // 主袍身體
+            const robeGradient = ctx.createLinearGradient(centerX - 35, centerY + 15, centerX + 35, centerY + 135);
+            robeGradient.addColorStop(0, colors.robe);
+            robeGradient.addColorStop(0.3, colors.robeAccent);
+            robeGradient.addColorStop(0.7, colors.robe);
+            robeGradient.addColorStop(1, colors.robeShadow);
+            ctx.fillStyle = robeGradient;
+            ctx.fillRect(centerX - 35, centerY + 15, 70, 120);
+            
+            // 外袍裝飾
+            ctx.fillStyle = colors.accent;
+            ctx.globalAlpha = 0.6;
+            ctx.fillRect(centerX - 42, centerY + 20, 84, 125);
+            ctx.globalAlpha = 1;
+            
+            // 袖子陰影
+            ctx.fillStyle = colors.lightShadow;
+            ctx.fillRect(centerX - 70, centerY + 35, 35, 60);
+            ctx.fillRect(centerX + 35, centerY + 35, 35, 60);
+            
+            // 袖子
+            const sleeveGradient = ctx.createLinearGradient(centerX - 65, centerY + 30, centerX - 30, centerY + 95);
+            sleeveGradient.addColorStop(0, colors.robe);
+            sleeveGradient.addColorStop(1, colors.robeShadow);
+            ctx.fillStyle = sleeveGradient;
+            ctx.fillRect(centerX - 65, centerY + 30, 35, 60);
+            ctx.fillRect(centerX + 30, centerY + 30, 35, 60);
+            
+            // 頭部陰影
+            ctx.fillStyle = colors.shadow;
+            ctx.beginPath();
+            ctx.arc(centerX + 2, centerY - 47, 35, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 頭部
+            const faceGradient = ctx.createRadialGradient(centerX - 5, centerY - 55, 0, centerX, centerY - 50, 35);
+            faceGradient.addColorStop(0, colors.skinHighlight);
+            faceGradient.addColorStop(0.7, colors.skin);
+            faceGradient.addColorStop(1, colors.robeShadow);
+            ctx.fillStyle = faceGradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY - 50, 35, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 面部高光
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.beginPath();
+            ctx.arc(centerX - 8, centerY - 58, 12, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 頭部光暈
+            const headGlow = ctx.createRadialGradient(centerX, centerY - 50, 0, centerX, centerY - 50, 50);
+            headGlow.addColorStop(0, 'rgba(255, 215, 0, 0.5)');
+            headGlow.addColorStop(0.6, 'rgba(255, 215, 0, 0.2)');
+            headGlow.addColorStop(1, 'rgba(255, 215, 0, 0)');
+            ctx.fillStyle = headGlow;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY - 50, 50, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 頭髮陰影
+            ctx.fillStyle = colors.shadow;
+            ctx.fillRect(centerX - 32, centerY - 78, 64, 40);
+            
+            // 頭髮
+            const hairGradient = ctx.createLinearGradient(centerX - 30, centerY - 75, centerX + 30, centerY - 35);
+            hairGradient.addColorStop(0, colors.hair);
+            hairGradient.addColorStop(0.5, colors.hairHighlight);
+            hairGradient.addColorStop(1, colors.hair);
+            ctx.fillStyle = hairGradient;
+            ctx.fillRect(centerX - 30, centerY - 75, 60, 40);
+            
+            // 髮髻
+            ctx.beginPath();
+            ctx.arc(centerX - 15, centerY - 70, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(centerX + 15, centerY - 70, 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 髮飾
+            ctx.fillStyle = colors.glow;
+            ctx.fillRect(centerX - 3, centerY - 78, 6, 20);
+            const ornamentGradient = ctx.createRadialGradient(centerX, centerY - 75, 0, centerX, centerY - 75, 8);
+            ornamentGradient.addColorStop(0, '#fff');
+            ornamentGradient.addColorStop(0.5, colors.glow);
+            ornamentGradient.addColorStop(1, colors.robeShadow);
+            ctx.fillStyle = ornamentGradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY - 75, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 腰帶
+            ctx.fillStyle = colors.accent;
+            ctx.fillRect(centerX - 42, centerY + 65, 84, 16);
+            
+            // 腰帶邊框
+            ctx.strokeStyle = colors.glow;
+            ctx.lineWidth = 2;
+            ctx.strokeRect(centerX - 42, centerY + 65, 84, 16);
+            
+            // 腰帶寶石
+            const gemGradient = ctx.createRadialGradient(centerX, centerY + 73, 0, centerX, centerY + 73, 10);
+            gemGradient.addColorStop(0, '#fff');
+            gemGradient.addColorStop(0.3, colors.glow);
+            gemGradient.addColorStop(0.7, colors.accent);
+            gemGradient.addColorStop(1, colors.robeShadow);
+            ctx.fillStyle = gemGradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY + 73, 8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 仙劍
+            drawSword(ctx, colors, centerX + 50, centerY - 25);
+            
+            // 胸前法印
+            drawMagicSymbol(ctx, colors, centerX, centerY + 40);
+        }
+        
+        function drawSword(ctx, colors, x, y) {
+            // 劍影
+            ctx.fillStyle = colors.shadow;
+            ctx.fillRect(x + 2, y + 2, 8, 90);
+            
+            // 劍身
+            const swordGradient = ctx.createLinearGradient(x, y, x + 8, y);
+            swordGradient.addColorStop(0, colors.weapon);
+            swordGradient.addColorStop(0.5, colors.weaponHighlight);
+            swordGradient.addColorStop(1, colors.weapon);
+            ctx.fillStyle = swordGradient;
+            ctx.fillRect(x, y, 8, 90);
+            
+            // 劍柄
+            ctx.fillStyle = colors.glow;
+            ctx.fillRect(x - 2, y + 85, 12, 20);
+            
+            // 劍光效果
+            ctx.strokeStyle = 'rgba(230, 230, 250, 0.9)';
+            ctx.lineWidth = 4;
+            ctx.shadowColor = 'rgba(230, 230, 250, 0.6)';
+            ctx.shadowBlur = 12;
+            ctx.beginPath();
+            ctx.moveTo(x + 4, y);
+            ctx.lineTo(x + 4, y + 90);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            
+            // 劍尖光芒
+            const tipGlow = ctx.createRadialGradient(x + 4, y, 0, x + 4, y, 15);
+            tipGlow.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+            tipGlow.addColorStop(0.5, 'rgba(230, 230, 250, 0.4)');
+            tipGlow.addColorStop(1, 'rgba(230, 230, 250, 0)');
+            ctx.fillStyle = tipGlow;
+            ctx.beginPath();
+            ctx.arc(x + 4, y, 15, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function drawMagicSymbol(ctx, colors, x, y) {
+            // 外圈
+            ctx.strokeStyle = colors.glow;
+            ctx.lineWidth = 4;
+            ctx.shadowColor = colors.glow;
+            ctx.shadowBlur = 8;
+            ctx.beginPath();
+            ctx.arc(x, y, 18, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // 中圈
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(x, y, 12, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // 內圈
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            
+            // 太極圖案
+            ctx.fillStyle = colors.glow;
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, Math.PI, false);
+            ctx.arc(x, y - 3, 3, 0, Math.PI * 2, true);
+            ctx.arc(x, y + 3, 3, 0, Math.PI * 2, false);
+            ctx.fill();
+            
+            // 中心點
+            ctx.fillStyle = colors.accent;
+            ctx.beginPath();
+            ctx.arc(x, y - 3, 1, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = colors.glow;
+            ctx.beginPath();
+            ctx.arc(x, y + 3, 1, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function drawFloatingElements(ctx, colors) {
+            // 花瓣
+            for(let i = 0; i < 15; i++) {
+                const x = 40 + Math.random() * 320;
+                const y = 30 + Math.random() * 150;
+                const size = 3 + Math.random() * 5;
+                
+                const petalGradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+                petalGradient.addColorStop(0, 'rgba(255, 182, 193, 0.9)');
+                petalGradient.addColorStop(0.7, 'rgba(255, 182, 193, 0.5)');
+                petalGradient.addColorStop(1, 'rgba(255, 182, 193, 0.1)');
+                ctx.fillStyle = petalGradient;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // 光點
+            for(let i = 0; i < 20; i++) {
+                const x = Math.random() * 400;
+                const y = Math.random() * 400;
+                const size = 1 + Math.random() * 3;
+                
+                const sparkleGradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+                sparkleGradient.addColorStop(0, 'rgba(255, 215, 0, 0.8)');
+                sparkleGradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                ctx.fillStyle = sparkleGradient;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function drawTitle(ctx, colors) {
+            // 主標題
+            ctx.fillStyle = colors.glow;
+            ctx.font = 'bold 24px "Noto Serif TC", serif';
+            ctx.textAlign = 'center';
+            ctx.shadowColor = 'rgba(255, 215, 0, 0.8)';
+            ctx.shadowBlur = 12;
+            ctx.fillText('夢遊紅塵', 200, 350);
+            
+            // 副標題
+            ctx.font = 'bold 18px "Noto Serif TC", serif';
+            ctx.fillStyle = colors.glowPurple;
+            ctx.shadowColor = 'rgba(218, 112, 214, 0.6)';
+            ctx.shadowBlur = 8;
+            ctx.fillText('主角', 200, 375);
+            ctx.shadowBlur = 0;
+        }
+        
+        function generateVariation() {
+            currentVariation = (currentVariation + 1) % 3;
+            generateMainCharacter();
+        }
+        
+        function downloadImage() {
+            const canvas = document.getElementById('mainCanvas');
+            const link = document.createElement('a');
+            link.download = 'main-character.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            console.log('主角色圖片已下載');
+            alert('圖片已下載！請將下載的 main-character.png 放入網站的 images 資料夾中。');
+        }
+        
+        // 頁面載入時自動生成
+        window.onload = function() {
+            generateMainCharacter();
+        };
+    </script>
+</body>
+</html>

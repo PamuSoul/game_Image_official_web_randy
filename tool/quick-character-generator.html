@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色圖片快速生成器</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a0f2e 0%, #4a1942 50%, #1a0f2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .canvas-container {
+            display: inline-block;
+            margin: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        canvas {
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #f4d03f, #f39c12);
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            background: linear-gradient(45deg, #ffd700, #ff6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>角色圖片生成器</h1>
+        
+        <div class="canvas-container">
+            <h3>地藏</h3>
+            <canvas id="character1Canvas" width="300" height="300"></canvas>
+            <button class="btn" onclick="downloadCharacter1()">下載 character1.png</button>
+        </div>
+        
+        <div class="canvas-container">
+            <h3>龍吟</h3>
+            <canvas id="character3Canvas" width="300" height="300"></canvas>
+            <button class="btn" onclick="downloadCharacter3()">下載 character3.png</button>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <button class="btn" onclick="generateAllCharacters()" style="background: linear-gradient(45deg, #667eea, #764ba2); color: white;">生成所有角色</button>
+        </div>
+    </div>
+
+    <script>
+        function generateCharacter1() {
+            const canvas = document.getElementById('character1Canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 地藏配色 - 仙氣飄逸的藍白色調
+            const colors = {
+                bg1: '#e8f4f8',
+                bg2: '#b8e6f0', 
+                bg3: '#4a90e2',
+                accent: '#87ceeb',
+                text: '#4682b4',
+                glow: '#add8e6'
+            };
+            
+            // 漸變背景
+            const bgGradient = ctx.createRadialGradient(150, 150, 0, 150, 150, 150);
+            bgGradient.addColorStop(0, colors.bg1);
+            bgGradient.addColorStop(0.5, colors.bg2);
+            bgGradient.addColorStop(1, colors.bg3);
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 仙氣光環
+            for(let i = 0; i < 5; i++) {
+                const glowGradient = ctx.createRadialGradient(150, 150, i * 20, 150, 150, 120 - i * 15);
+                glowGradient.addColorStop(0, `rgba(135, 206, 235, ${0.3 - i * 0.05})`);
+                glowGradient.addColorStop(1, 'rgba(135, 206, 235, 0)');
+                ctx.fillStyle = glowGradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // 飄散的雲朵和仙氣
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            for(let i = 0; i < 8; i++) {
+                const x = 30 + Math.random() * 240;
+                const y = 30 + Math.random() * 120;
+                const size = 8 + Math.random() * 15;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // 仙女身形輪廓
+            ctx.fillStyle = 'rgba(176, 224, 230, 0.8)';
+            ctx.fillRect(125, 120, 50, 100);
+            
+            // 飄逸長髮
+            ctx.fillStyle = 'rgba(75, 0, 130, 0.7)';
+            ctx.fillRect(110, 80, 80, 60);
+            
+            // 仙氣飄帶
+            ctx.strokeStyle = colors.glow;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.bezierCurveTo(50, 100, 100, 80, 150, 95);
+            ctx.bezierCurveTo(200, 110, 250, 90, 280, 115);
+            ctx.stroke();
+            
+            // 中心文字
+            ctx.fillStyle = colors.text;
+            ctx.font = 'bold 48px "Arial", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+            ctx.shadowBlur = 10;
+            ctx.fillText('仙', 150, 180);
+            
+            // 標題
+            ctx.font = 'bold 20px "Arial", sans-serif';
+            ctx.fillText('地藏', 150, 260);
+            ctx.shadowBlur = 0;
+        }
+        
+        function generateCharacter3() {
+            const canvas = document.getElementById('character3Canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 龍吟配色 - 神秘的黑紫色調
+            const colors = {
+                bg1: '#2c2c2c',
+                bg2: '#4a4a4a',
+                bg3: '#8b008b',
+                accent: '#9370db',
+                text: '#dda0dd',
+                glow: '#8a2be2'
+            };
+            
+            // 漸變背景
+            const bgGradient = ctx.createRadialGradient(150, 150, 0, 150, 150, 150);
+            bgGradient.addColorStop(0, colors.bg1);
+            bgGradient.addColorStop(0.5, colors.bg2);
+            bgGradient.addColorStop(1, colors.bg3);
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 神秘光環
+            for(let i = 0; i < 6; i++) {
+                const glowGradient = ctx.createRadialGradient(150, 150, i * 18, 150, 150, 110 - i * 12);
+                glowGradient.addColorStop(0, `rgba(138, 43, 226, ${0.4 - i * 0.06})`);
+                glowGradient.addColorStop(1, 'rgba(138, 43, 226, 0)');
+                ctx.fillStyle = glowGradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // 陰影效果
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+            for(let i = 0; i < 10; i++) {
+                const x = Math.random() * 300;
+                const y = Math.random() * 300;
+                const size = 10 + Math.random() * 20;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // 刺客身形輪廓
+            ctx.fillStyle = 'rgba(75, 0, 130, 0.8)';
+            ctx.fillRect(125, 120, 50, 100);
+            
+            // 斗篷
+            ctx.fillStyle = 'rgba(25, 25, 25, 0.9)';
+            ctx.fillRect(110, 110, 80, 120);
+            
+            // 神秘紫光
+            ctx.strokeStyle = colors.glow;
+            ctx.lineWidth = 3;
+            ctx.shadowColor = colors.glow;
+            ctx.shadowBlur = 15;
+            ctx.beginPath();
+            ctx.arc(150, 150, 60, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            
+            // 中心文字
+            ctx.fillStyle = colors.text;
+            ctx.font = 'bold 48px "Arial", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.shadowColor = colors.glow;
+            ctx.shadowBlur = 12;
+            ctx.fillText('影', 150, 180);
+            
+            // 標題
+            ctx.font = 'bold 20px "Arial", sans-serif';
+            ctx.fillText('龍吟', 150, 260);
+            ctx.shadowBlur = 0;
+        }
+        
+        function generateAllCharacters() {
+            generateCharacter1();
+            generateCharacter3();
+        }
+        
+        function downloadCharacter1() {
+            const canvas = document.getElementById('character1Canvas');
+            const link = document.createElement('a');
+            link.download = 'character1.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            console.log('地藏圖片已下載');
+        }
+        
+        function downloadCharacter3() {
+            const canvas = document.getElementById('character3Canvas');
+            const link = document.createElement('a');
+            link.download = 'character3.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            console.log('龍吟圖片已下載');
+        }
+        
+        // 頁面載入時自動生成
+        window.onload = function() {
+            generateAllCharacters();
+        };
+    </script>
+</body>
+</html>

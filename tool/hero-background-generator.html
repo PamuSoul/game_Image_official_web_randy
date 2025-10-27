@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天穹劍域 - 背景圖片生成器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background: linear-gradient(135deg, #1a0f2e 0%, #4a1942 50%, #1a0f2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffd700, #ff6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #b39ddb;
+        }
+
+        .canvas-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        canvas {
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            max-width: 100%;
+            height: auto;
+        }
+
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            color: #b39ddb;
+        }
+
+        select, input[type="range"] {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #f4d03f, #f39c12);
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(244, 208, 63, 0.4);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>天穹劍域</h1>
+        <p class="subtitle">仙俠風背景圖片生成器</p>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label>背景主題</label>
+                <select id="themeSelect" onchange="generateBackground()">
+                    <option value="sunset">仙境黃昏</option>
+                    <option value="night">星空夜色</option>
+                    <option value="mountain">崇山峻嶺</option>
+                    <option value="palace">天宮仙殿</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>光效強度</label>
+                <input type="range" id="glowIntensity" min="0" max="10" value="5" onchange="generateBackground()">
+            </div>
+            
+            <div class="control-group">
+                <label>雲霧效果</label>
+                <input type="range" id="mistEffect" min="0" max="10" value="3" onchange="generateBackground()">
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="heroCanvas" width="1920" height="1080"></canvas>
+        </div>
+        
+        <div>
+            <button class="btn" onclick="generateBackground()">重新生成背景</button>
+            <button class="btn secondary" onclick="downloadBackground()">下載背景圖片</button>
+            <button class="btn secondary" onclick="generateVariation()">生成變體</button>
+        </div>
+        
+        <div class="info">
+            <h4>使用說明:</h4>
+            <p>1. 選擇喜歡的背景主題和效果設定</p>
+            <p>2. 點擊「下載背景圖片」獲得 hero-background.jpg</p>
+            <p>3. 將下載的圖片放入 images 資料夾中</p>
+            <p>4. 重新整理網站即可看到新的背景</p>
+        </div>
+    </div>
+
+    <script>
+        let currentVariation = 0;
+        
+        function generateBackground() {
+            const canvas = document.getElementById('heroCanvas');
+            const ctx = canvas.getContext('2d');
+            const theme = document.getElementById('themeSelect').value;
+            const glowIntensity = document.getElementById('glowIntensity').value;
+            const mistEffect = document.getElementById('mistEffect').value;
+            
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 根據主題設定配色方案
+            let colors = getThemeColors(theme);
+            
+            // 繪製基礎漸變背景
+            const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            bgGradient.addColorStop(0, colors.bg1);
+            bgGradient.addColorStop(0.3, colors.bg2);
+            bgGradient.addColorStop(0.7, colors.bg3);
+            bgGradient.addColorStop(1, colors.bg4);
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製多層光效
+            drawLightEffects(ctx, colors, glowIntensity);
+            
+            // 繪製雲霧效果
+            drawMistEffects(ctx, colors, mistEffect);
+            
+            // 繪製主題特效
+            drawThemeEffects(ctx, theme, colors);
+            
+            // 繪製仙氣粒子
+            drawParticles(ctx, colors);
+            
+            console.log(`生成${theme}主題背景完成`);
+        }
+        
+        function getThemeColors(theme) {
+            switch(theme) {
+                case 'sunset':
+                    return {
+                        bg1: '#ff6b6b', bg2: '#feca57', bg3: '#ff9ff3', bg4: '#54a0ff',
+                        accent: '#ffd700', glow: '#ff7675', particle: '#fdcb6e'
+                    };
+                case 'night':
+                    return {
+                        bg1: '#2c2c54', bg2: '#40407a', bg3: '#706fd3', bg4: '#0c0c0c',
+                        accent: '#a29bfe', glow: '#6c5ce7', particle: '#fd79a8'
+                    };
+                case 'mountain':
+                    return {
+                        bg1: '#667eea', bg2: '#764ba2', bg3: '#f093fb', bg4: '#f5f7fa',
+                        accent: '#4834d4', glow: '#be2edd', particle: '#0abde3'
+                    };
+                case 'palace':
+                    return {
+                        bg1: '#ffd700', bg2: '#ff6348', bg3: '#ff9ff3', bg4: '#667eea',
+                        accent: '#ff6b6b', glow: '#ffa502', particle: '#ff3838'
+                    };
+                default:
+                    return {
+                        bg1: '#667eea', bg2: '#764ba2', bg3: '#f093fb', bg4: '#f5f7fa',
+                        accent: '#4834d4', glow: '#be2edd', particle: '#0abde3'
+                    };
+            }
+        }
+        
+        function drawLightEffects(ctx, colors, intensity) {
+            const alpha = intensity / 20;
+            
+            for(let i = 0; i < 5; i++) {
+                const glowGradient = ctx.createRadialGradient(
+                    400 + i * 300, 200 + i * 150, 0,
+                    400 + i * 300, 200 + i * 150, 400 - i * 50
+                );
+                glowGradient.addColorStop(0, `rgba(255, 215, 0, ${alpha})`);
+                glowGradient.addColorStop(0.5, `rgba(255, 107, 107, ${alpha * 0.7})`);
+                glowGradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                
+                ctx.fillStyle = glowGradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+        
+        function drawMistEffects(ctx, colors, mistLevel) {
+            const alpha = mistLevel / 15;
+            
+            // 繪製雲霧層
+            for(let i = 0; i < 8; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const size = 200 + Math.random() * 300;
+                
+                const mistGradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+                mistGradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+                mistGradient.addColorStop(0.6, `rgba(255, 255, 255, ${alpha * 0.5})`);
+                mistGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                
+                ctx.fillStyle = mistGradient;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function drawThemeEffects(ctx, theme, colors) {
+            switch(theme) {
+                case 'sunset':
+                    // 繪製太陽
+                    const sunGradient = ctx.createRadialGradient(1600, 300, 0, 1600, 300, 200);
+                    sunGradient.addColorStop(0, 'rgba(255, 215, 0, 0.8)');
+                    sunGradient.addColorStop(0.7, 'rgba(255, 107, 107, 0.6)');
+                    sunGradient.addColorStop(1, 'rgba(255, 107, 107, 0)');
+                    ctx.fillStyle = sunGradient;
+                    ctx.beginPath();
+                    ctx.arc(1600, 300, 200, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                    
+                case 'night':
+                    // 繪製月亮
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.beginPath();
+                    ctx.arc(1400, 200, 80, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // 繪製星星
+                    for(let i = 0; i < 50; i++) {
+                        const x = Math.random() * canvas.width;
+                        const y = Math.random() * canvas.height * 0.6;
+                        const size = 1 + Math.random() * 3;
+                        
+                        ctx.fillStyle = `rgba(255, 255, 255, ${0.6 + Math.random() * 0.4})`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    break;
+                    
+                case 'mountain':
+                    // 繪製山脈輪廓
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                    ctx.beginPath();
+                    ctx.moveTo(0, canvas.height);
+                    for(let x = 0; x < canvas.width; x += 100) {
+                        const y = canvas.height - 200 - Math.random() * 400;
+                        ctx.lineTo(x, y);
+                    }
+                    ctx.lineTo(canvas.width, canvas.height);
+                    ctx.closePath();
+                    ctx.fill();
+                    break;
+                    
+                case 'palace':
+                    // 繪製宮殿剪影
+                    ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+                    ctx.fillRect(canvas.width * 0.6, canvas.height * 0.4, 300, 400);
+                    ctx.fillRect(canvas.width * 0.7, canvas.height * 0.3, 100, 200);
+                    break;
+            }
+        }
+        
+        function drawParticles(ctx, colors) {
+            // 繪製浮動粒子
+            for(let i = 0; i < 100; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const size = 1 + Math.random() * 4;
+                const alpha = 0.3 + Math.random() * 0.7;
+                
+                const particleGradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+                particleGradient.addColorStop(0, `rgba(255, 215, 0, ${alpha})`);
+                particleGradient.addColorStop(1, `rgba(255, 215, 0, 0)`);
+                
+                ctx.fillStyle = particleGradient;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function generateVariation() {
+            currentVariation = (currentVariation + 1) % 3;
+            
+            // 隨機調整設定
+            document.getElementById('glowIntensity').value = 3 + Math.floor(Math.random() * 5);
+            document.getElementById('mistEffect').value = 2 + Math.floor(Math.random() * 6);
+            
+            generateBackground();
+        }
+        
+        function downloadBackground() {
+            const canvas = document.getElementById('heroCanvas');
+            const link = document.createElement('a');
+            link.download = 'hero-background.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+            
+            console.log('背景圖片已下載');
+            alert('背景圖片已下載！請將 hero-background.jpg 放入 images 資料夾中。');
+        }
+        
+        // 頁面載入時自動生成
+        window.onload = function() {
+            generateBackground();
+        };
+    </script>
+</body>
+</html>

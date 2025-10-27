@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仙俠角色圖片生成器</title>
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .character-preview {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .character-preview:hover {
+            transform: translateY(-5px);
+        }
+        
+        .character-avatar {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 地藏 */
+        .yunmeng {
+            background: linear-gradient(135deg, #e8f4f8 0%, #b8e6f0 50%, #4a90e2 100%);
+        }
+        
+        .yunmeng::before {
+            content: '仙';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: rgba(74, 144, 226, 0.8);
+            font-weight: bold;
+        }
+        
+        .yunmeng::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(74, 144, 226, 0.6);
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* 神策 */
+        .jianxin {
+            background: linear-gradient(135deg, #f0e6d2 0%, #d4af37 50%, #8b4513 100%);
+        }
+        
+        .jianxin::before {
+            content: '劍';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: rgba(139, 69, 19, 0.8);
+            font-weight: bold;
+        }
+        
+        .jianxin::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 20%;
+            width: 6px;
+            height: 60%;
+            background: linear-gradient(to bottom, #d4af37, #8b4513);
+            border-radius: 3px;
+            transform: rotate(15deg);
+        }
+        
+        /* 龍吟 */
+        .meiying {
+            background: linear-gradient(135deg, #2c2c2c 0%, #4a4a4a 50%, #8b008b 100%);
+        }
+        
+        .meiying::before {
+            content: '影';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: rgba(139, 0, 139, 0.8);
+            font-weight: bold;
+        }
+        
+        .meiying::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.3) 70%);
+        }
+        
+        /* 主角色 */
+        .main-character {
+            background: linear-gradient(135deg, #ffd700 0%, #ff6347 50%, #4b0082 100%);
+        }
+        
+        .main-character::before {
+            content: '主';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: rgba(75, 0, 130, 0.8);
+            font-weight: bold;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+        
+        .character-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .character-info h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        
+        .character-info p {
+            margin: 0 0 15px 0;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .download-btn {
+            background: linear-gradient(45deg, #f4d03f, #f39c12);
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .generate-all {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .generate-all button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .generate-all button:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 仙俠角色圖片生成器</h1>
+        
+        <div class="characters-grid">
+            <!-- 主角色 -->
+            <div class="character-preview">
+                <div class="character-avatar main-character" id="main-avatar"></div>
+                <div class="character-info">
+                    <h3>主角色</h3>
+                    <p>遊戲的主要角色，身懷絕世武功</p>
+                    <button class="download-btn" onclick="generateCharacterImage('main-character', '主角色')">
+                        生成圖片
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 地藏 -->
+            <div class="character-preview">
+                <div class="character-avatar yunmeng" id="yunmeng-avatar"></div>
+                <div class="character-info">
+                    <h3>地藏</h3>
+                    <p>天真善良的仙女，擁有治癒之力</p>
+                    <button class="download-btn" onclick="generateCharacterImage('character1', '地藏')">
+                        生成圖片
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 神策 -->
+            <div class="character-preview">
+                <div class="character-avatar jianxin" id="jianxin-avatar"></div>
+                <div class="character-info">
+                    <h3>神策</h3>
+                    <p>劍術超群的俊美少年，正義感十足</p>
+                    <button class="download-btn" onclick="generateCharacterImage('character2', '神策')">
+                        生成圖片
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 龍吟 -->
+            <div class="character-preview">
+                <div class="character-avatar meiying" id="meiying-avatar"></div>
+                <div class="character-info">
+                    <h3>龍吟</h3>
+                    <p>神秘莫測的暗影殺手，行蹤詭秘</p>
+                    <button class="download-btn" onclick="generateCharacterImage('character3', '龍吟')">
+                        生成圖片
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="generate-all">
+            <button onclick="generateAllCharacters()">🎨 一鍵生成所有角色圖片</button>
+        </div>
+    </div>
+
+    <script>
+        function generateCharacterImage(filename, characterName) {
+            // 創建canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 300;
+            canvas.height = 250;
+            
+            // 設定角色主題色彩
+            let gradient;
+            switch(characterName) {
+                case '地藏':
+                    gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, '#e8f4f8');
+                    gradient.addColorStop(0.5, '#b8e6f0');
+                    gradient.addColorStop(1, '#4a90e2');
+                    break;
+                case '神策':
+                    gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, '#f0e6d2');
+                    gradient.addColorStop(0.5, '#d4af37');
+                    gradient.addColorStop(1, '#8b4513');
+                    break;
+                case '龍吟':
+                    gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, '#2c2c2c');
+                    gradient.addColorStop(0.5, '#4a4a4a');
+                    gradient.addColorStop(1, '#8b008b');
+                    break;
+                default:
+                    gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, '#ffd700');
+                    gradient.addColorStop(0.5, '#ff6347');
+                    gradient.addColorStop(1, '#4b0082');
+            }
+            
+            // 繪製背景
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 添加紋理
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            for (let i = 0; i < 30; i++) {
+                ctx.beginPath();
+                ctx.arc(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    Math.random() * 2 + 1,
+                    0, Math.PI * 2
+                );
+                ctx.fill();
+            }
+            
+            // 繪製角色文字
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.font = 'bold 60px "Noto Serif TC", serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // 添加文字陰影
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            
+            const char = characterName.charAt(characterName.length - 1);
+            ctx.fillText(char, canvas.width / 2, canvas.height / 2);
+            
+            // 重置陰影
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            
+            // 下載圖片
+            const link = document.createElement('a');
+            link.download = filename + '.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+            
+            console.log(`生成角色圖片: ${characterName}`);
+        }
+        
+        function generateAllCharacters() {
+            const characters = [
+                { filename: 'main-character', name: '主角色' },
+                { filename: 'character1', name: '地藏' },
+                { filename: 'character2', name: '神策' },
+                { filename: 'character3', name: '龍吟' }
+            ];
+            
+            let delay = 0;
+            characters.forEach(char => {
+                setTimeout(() => {
+                    generateCharacterImage(char.filename, char.name);
+                }, delay);
+                delay += 500;
+            });
+            
+            alert('開始生成所有角色圖片，請稍等...');
+        }
+    </script>
+</body>
+</html>

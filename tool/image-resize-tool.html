@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片尺寸調整工具</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background: linear-gradient(135deg, #1a0f2e 0%, #4a1942 50%, #1a0f2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ffd700, #ff6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .adjustment-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .adjustment-section h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .slider-container label {
+            min-width: 120px;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffd700;
+            cursor: pointer;
+        }
+
+        .value-display {
+            min-width: 80px;
+            text-align: center;
+            background: rgba(255, 215, 0, 0.2);
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .css-output {
+            background: #222;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-top: 20px;
+            border: 2px solid #333;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #f4d03f, #f39c12);
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .preview {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .info {
+            background: rgba(135, 206, 235, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #87ceeb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>圖片尺寸調整工具</h1>
+        
+        <div class="info">
+            <h4>使用說明:</h4>
+            <p>1. 調整下方的滑桿來設定圖片尺寸</p>
+            <p>2. 複製生成的CSS代碼</p>
+            <p>3. 將CSS代碼加入到 style.css 檔案中對應的位置</p>
+        </div>
+
+        <!-- 主角色圖片調整 -->
+        <div class="adjustment-section">
+            <h3>🎭 主角色圖片 (Hero區域)</h3>
+            <div class="slider-container">
+                <label>最大寬度:</label>
+                <input type="range" id="heroMaxWidth" min="200" max="800" value="400" oninput="updateValues()">
+                <div class="value-display" id="heroMaxWidthValue">400px</div>
+            </div>
+            <div class="slider-container">
+                <label>縮放比例:</label>
+                <input type="range" id="heroScale" min="50" max="150" value="100" oninput="updateValues()">
+                <div class="value-display" id="heroScaleValue">100%</div>
+            </div>
+        </div>
+
+        <!-- 角色卡片圖片調整 -->
+        <div class="adjustment-section">
+            <h3>👤 角色卡片圖片</h3>
+            <div class="slider-container">
+                <label>圖片高度:</label>
+                <input type="range" id="cardHeight" min="150" max="400" value="250" oninput="updateValues()">
+                <div class="value-display" id="cardHeightValue">250px</div>
+            </div>
+            <div class="slider-container">
+                <label>卡片縮放:</label>
+                <input type="range" id="cardScale" min="80" max="120" value="100" oninput="updateValues()">
+                <div class="value-display" id="cardScaleValue">100%</div>
+            </div>
+        </div>
+
+        <!-- QR Code調整 -->
+        <div class="adjustment-section">
+            <h3>📱 QR Code</h3>
+            <div class="slider-container">
+                <label>QR尺寸:</label>
+                <input type="range" id="qrSize" min="80" max="200" value="120" oninput="updateValues()">
+                <div class="value-display" id="qrSizeValue">120px</div>
+            </div>
+        </div>
+
+        <!-- 下載按鈕調整 -->
+        <div class="adjustment-section">
+            <h3>⬇️ 下載按鈕圖片</h3>
+            <div class="slider-container">
+                <label>按鈕高度:</label>
+                <input type="range" id="downloadHeight" min="40" max="100" value="60" oninput="updateValues()">
+                <div class="value-display" id="downloadHeightValue">60px</div>
+            </div>
+        </div>
+
+        <!-- CSS輸出 -->
+        <div class="css-output" id="cssOutput">
+/* 等待調整... */
+        </div>
+        
+        <button class="copy-btn" onclick="copyCss()">複製 CSS 代碼</button>
+        
+        <div class="info">
+            <h4>💡 套用方式:</h4>
+            <p>將上方的CSS代碼加入到 <code>css/style.css</code> 檔案的最底部，或者替換對應的現有樣式。</p>
+        </div>
+    </div>
+
+    <script>
+        function updateValues() {
+            // 更新顯示值
+            document.getElementById('heroMaxWidthValue').textContent = document.getElementById('heroMaxWidth').value + 'px';
+            document.getElementById('heroScaleValue').textContent = document.getElementById('heroScale').value + '%';
+            document.getElementById('cardHeightValue').textContent = document.getElementById('cardHeight').value + 'px';
+            document.getElementById('cardScaleValue').textContent = document.getElementById('cardScale').value + '%';
+            document.getElementById('qrSizeValue').textContent = document.getElementById('qrSize').value + 'px';
+            document.getElementById('downloadHeightValue').textContent = document.getElementById('downloadHeight').value + 'px';
+            
+            // 生成CSS
+            generateCSS();
+        }
+        
+        function generateCSS() {
+            const heroMaxWidth = document.getElementById('heroMaxWidth').value;
+            const heroScale = document.getElementById('heroScale').value;
+            const cardHeight = document.getElementById('cardHeight').value;
+            const cardScale = document.getElementById('cardScale').value;
+            const qrSize = document.getElementById('qrSize').value;
+            const downloadHeight = document.getElementById('downloadHeight').value;
+            
+            const css = `/* 圖片尺寸調整 - 自訂設定 */
+
+/* 主角色圖片 */
+.character-image {
+    max-width: ${heroMaxWidth}px;
+    height: auto;
+    transform: scale(${heroScale / 100});
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+    animation: float 3s ease-in-out infinite;
+}
+
+/* 角色卡片圖片 */
+.character-card {
+    transform: scale(${cardScale / 100});
+    transition: transform 0.3s ease;
+}
+
+.character-card img {
+    width: 100%;
+    height: ${cardHeight}px;
+    object-fit: cover;
+}
+
+/* QR Code */
+.qr-code {
+    width: ${qrSize}px;
+    height: ${qrSize}px;
+    margin-bottom: 1rem;
+}
+
+/* 下載按鈕圖片 */
+.download-link img {
+    height: ${downloadHeight}px;
+    width: auto;
+}`;
+            
+            document.getElementById('cssOutput').textContent = css;
+        }
+        
+        function copyCss() {
+            const cssOutput = document.getElementById('cssOutput');
+            const textArea = document.createElement('textarea');
+            textArea.value = cssOutput.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // 顯示複製成功提示
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '已複製！';
+            btn.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(45deg, #f4d03f, #f39c12)';
+            }, 2000);
+        }
+        
+        // 初始化
+        window.onload = function() {
+            updateValues();
+        };
+    </script>
+</body>
+</html>

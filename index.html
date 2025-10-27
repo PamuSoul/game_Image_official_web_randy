@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>天穹劍域 - 遊戲官網</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <img
+            src="images/logo.png"
+            alt="遊戲Logo"
+            class="logo"
+            loading="lazy"
+          />
+          <span class="game-title">天穹劍域</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#home">首頁</a></li>
+          <li><a href="#news">最新消息</a></li>
+          <li><a href="#features">遊戲特色</a></li>
+          <li><a href="#characters">角色介紹</a></li>
+          <li><a href="#screenshots">遊戲圖片</a></li>
+          <li><a href="#videos">精彩影片</a></li>
+          <li><a href="#download">立即遊戲</a></li>
+        </ul>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 主要英雄區域 -->
+    <section id="home" class="hero-section">
+      <div class="hero-background">
+        <img src="images/example.gif" alt="背景動畫" class="hero-gif" />
+        <div class="background-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="main-title">天穹劍域</h1>
+          <h2 class="sub-title">仙劍情緣漫</h2>
+          <p class="hero-description">
+            踏入這個如夢似幻的仙俠世界，體驗古風武俠的浪漫情懷
+          </p>
+          <div class="hero-buttons">
+            <button class="btn-primary download-btn">
+              <span>立即遊戲</span>
+              <i class="download-icon">⬇</i>
+            </button>
+            <button class="btn-secondary watch-btn">觀看預告</button>
+          </div>
+        </div>
+        <div class="hero-character">
+          <img
+            src="images/main-character.png"
+            alt="主角色"
+            class="character-image"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- QR Code 區域 -->
+    <div class="qr-section">
+      <div class="qr-container">
+        <img src="images/qr-code.png" alt="QR Code" class="qr-code" />
+        <p>掃描下載</p>
+      </div>
+      <div class="platform-buttons">
+        <button class="platform-btn ios-btn">iOS下載</button>
+        <button class="platform-btn android-btn">Android下載</button>
+      </div>
+    </div>
+
+    <!-- 最新消息 -->
+    <section id="news" class="news-section">
+      <div class="container">
+        <h2 class="section-title">最新消息</h2>
+
+        <!-- 標籤頁導航 -->
+        <div class="news-tabs">
+          <button class="tab-btn active" data-tab="latest">最新</button>
+          <!-- <button class="tab-btn" data-tab="news">新聞</button> -->
+          <button class="tab-btn" data-tab="events">活動</button>
+          <button class="tab-btn" data-tab="guides">攻略</button>
+        </div>
+
+        <!-- 標籤頁內容 -->
+        <div class="news-content">
+          <!-- 最新標籤內容 -->
+          <div class="tab-content active" id="latest">
+            <div class="news-list" data-tab="latest">
+              <!-- 第1頁內容 -->
+              <div class="news-page active" data-page="1">
+                <article class="news-item">
+                  <div class="news-date">2025.10.01</div>
+                  <h3>1、“獨尊領域”系統</h3>
+                  <p>新增【封魔紅蓮陣】、【金龍賜福陣】</p>
+                  <span class="news-tag event">更新</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.10.01</div>
+                  <h3>“五行-滄溟”系統</h3>
+                  <p>新增【龍鳳和鳴】和【青龍神佑】</p>
+                  <span class="news-tag update">更新</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.10.01</div>
+                  <h3>後期養成線拓展</h3>
+                  <p>龍神系統：龍珠分支的功能</p>
+                  <span class="news-tag news">更新</span>
+                </article>
+              </div>
+
+              <!-- 第2頁內容 -->
+              <div class="news-page" data-page="2">
+                <article class="news-item">
+                  <div class="news-date">2025.09.28</div>
+                  <h3>中秋節特別活動開始</h3>
+                  <p>參與活動獲得限定服裝和道具...</p>
+                  <span class="news-tag event">活動</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.25</div>
+                  <h3>新增武魂系統</h3>
+                  <p>新增武魂進行升級，提升其生命、防禦、攻擊等基礎屬性。</p>
+                  <span class="news-tag character">更新</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.22</div>
+                  <h3>PVP競技場全新賽季開啟</h3>
+                  <p>挑戰更強的對手，爭奪至高榮譽...</p>
+                  <span class="news-tag update">更新</span>
+                </article>
+              </div>
+
+              <!-- 第3頁內容 -->
+              <div class="news-page" data-page="3">
+                <article class="news-item">
+                  <div class="news-date">2025.09.20</div>
+                  <h3>新手修仙指南：快速升級攻略</h3>
+                  <p>詳細解析前期修煉路線，助你快速踏上仙途...</p>
+                  <span class="news-tag guide">攻略</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.18</div>
+                  <h3>服務器維護公告</h3>
+                  <p>為提升遊戲體驗，將進行服務器優化...</p>
+                  <span class="news-tag news">新聞</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.15</div>
+                  <h3>師徒系統正式上線</h3>
+                  <p>找到你的修仙伙伴，共同成長...</p>
+                  <span class="news-tag update">更新</span>
+                </article>
+              </div>
+            </div>
+
+            <!-- 分頁控制 -->
+            <div class="pagination" data-tab="latest">
+              <button class="page-btn prev" disabled>上一頁</button>
+              <div class="page-numbers">
+                <button class="page-num active" data-page="1">1</button>
+                <button class="page-num" data-page="2">2</button>
+                <button class="page-num" data-page="3">3</button>
+              </div>
+              <button class="page-btn next">下一頁</button>
+            </div>
+          </div>
+
+          <!-- 新聞標籤內容 -->
+          <div class="tab-content" id="news">
+            <div class="news-list" data-tab="news">
+              <!-- 第1頁內容 -->
+              <div class="news-page active" data-page="1">
+                <article class="news-item">
+                  <div class="news-date">2025.10.01</div>
+                  <h3>遊戲獲得年度最佳MMORPG獎項</h3>
+                  <p>夢遊紅塵榮獲2025年度最佳移動MMORPG遊戲獎...</p>
+                  <span class="news-tag news">新聞</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.30</div>
+                  <h3>開發團隊專訪：創作理念分享</h3>
+                  <p>深入了解夢遊紅塵的創作過程和設計理念...</p>
+                  <span class="news-tag news">新聞</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.25</div>
+                  <h3>遊戲社群突破百萬用戶</h3>
+                  <p>感謝廣大玩家的支持與陪伴...</p>
+                  <span class="news-tag news">新聞</span>
+                </article>
+              </div>
+
+              <!-- 第2頁內容 -->
+              <div class="news-page" data-page="2">
+                <article class="news-item">
+                  <div class="news-date">2025.09.20</div>
+                  <h3>遊戲音樂會即將舉辦</h3>
+                  <p>現場演奏遊戲經典配樂，邀請玩家共襄盛舉...</p>
+                  <span class="news-tag news">新聞</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.15</div>
+                  <h3>製作人親筆信：感謝與展望</h3>
+                  <p>回顧過去一年的成長，展望未來發展...</p>
+                  <span class="news-tag news">新聞</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.10</div>
+                  <h3>遊戲週邊商品正式開售</h3>
+                  <p>精美手辦、服裝等周邊產品限量發售...</p>
+                  <span class="news-tag news">新聞</span>
+                </article>
+              </div>
+            </div>
+
+            <!-- 分頁控制 -->
+            <div class="pagination" data-tab="news">
+              <button class="page-btn prev" disabled>上一頁</button>
+              <div class="page-numbers">
+                <button class="page-num active" data-page="1">1</button>
+                <button class="page-num" data-page="2">2</button>
+              </div>
+              <button class="page-btn next">下一頁</button>
+            </div>
+          </div>
+
+          <!-- 活動標籤內容 -->
+          <div class="tab-content" id="events">
+            <div class="news-list" data-tab="events">
+              <!-- 第1頁內容 -->
+              <div class="news-page active" data-page="1">
+                <article class="news-item">
+                  <div class="news-date">2025.10.04</div>
+                  <h3>雙十國慶限時活動</h3>
+                  <p>慶祝國慶，登入即送稀有坐騎和時裝...</p>
+                  <span class="news-tag event">活動</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.28</div>
+                  <h3>中秋團圓慶典</h3>
+                  <p>與好友一同賞月，完成任務獲得月餅禮盒...</p>
+                  <span class="news-tag event">活動</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.22</div>
+                  <h3>週年慶典大型活動</h3>
+                  <p>豪華獎勵等你來拿，限時福利不容錯過...</p>
+                  <span class="news-tag event">活動</span>
+                </article>
+              </div>
+
+              <!-- 第2頁內容 -->
+              <div class="news-page" data-page="2">
+                <article class="news-item">
+                  <div class="news-date">2025.09.15</div>
+                  <h3>夏日清涼祭典</h3>
+                  <p>夏日限定服裝和道具，清涼一夏...</p>
+                  <span class="news-tag event">活動</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.08</div>
+                  <h3>師父節感恩活動</h3>
+                  <p>感謝師父的教導，特別活動表達敬意...</p>
+                  <span class="news-tag event">活動</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.01</div>
+                  <h3>開學季新人福利</h3>
+                  <p>新學期新氣象，新玩家專屬福利...</p>
+                  <span class="news-tag event">活動</span>
+                </article>
+              </div>
+            </div>
+
+            <!-- 分頁控制 -->
+            <div class="pagination" data-tab="events">
+              <button class="page-btn prev" disabled>上一頁</button>
+              <div class="page-numbers">
+                <button class="page-num active" data-page="1">1</button>
+                <button class="page-num" data-page="2">2</button>
+              </div>
+              <button class="page-btn next">下一頁</button>
+            </div>
+          </div>
+
+          <!-- 攻略標籤內容 -->
+          <div class="tab-content" id="guides">
+            <div class="news-list" data-tab="guides">
+              <!-- 第1頁內容 -->
+              <div class="news-page active" data-page="1">
+                <article class="news-item">
+                  <div class="news-date">2025.10.02</div>
+                  <h3>新手修仙指南：快速升級攻略</h3>
+                  <p>詳細解析前期修煉路線，助你快速踏上仙途...</p>
+                  <span class="news-tag guide">攻略</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.26</div>
+                  <h3>PVP戰鬥技巧大全</h3>
+                  <p>掌握這些技巧，在仙俠戰場上所向披靡...</p>
+                  <span class="news-tag guide">攻略</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.20</div>
+                  <h3>裝備強化完全指南</h3>
+                  <p>最佳強化路線，避免走彎路...</p>
+                  <span class="news-tag guide">攻略</span>
+                </article>
+              </div>
+
+              <!-- 第2頁內容 -->
+              <div class="news-page" data-page="2">
+                <article class="news-item">
+                  <div class="news-date">2025.09.15</div>
+                  <h3>副本攻略：天劫試煉</h3>
+                  <p>最新副本完全攻略，輕鬆通關...</p>
+                  <span class="news-tag guide">攻略</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.10</div>
+                  <h3>寵物培養心得分享</h3>
+                  <p>打造最強戰寵的秘訣...</p>
+                  <span class="news-tag guide">攻略</span>
+                </article>
+                <article class="news-item">
+                  <div class="news-date">2025.09.05</div>
+                  <h3>公會系統詳解</h3>
+                  <p>如何建立和管理一個強大的公會...</p>
+                  <span class="news-tag guide">攻略</span>
+                </article>
+              </div>
+            </div>
+
+            <!-- 分頁控制 -->
+            <div class="pagination" data-tab="guides">
+              <button class="page-btn prev" disabled>上一頁</button>
+              <div class="page-numbers">
+                <button class="page-num active" data-page="1">1</button>
+                <button class="page-num" data-page="2">2</button>
+              </div>
+              <button class="page-btn next">下一頁</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 遊戲特色 -->
+    <section id="features" class="features-section">
+      <div class="container">
+        <h2 class="section-title">遊戲特色</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚔️</div>
+            <h3>真實戰鬥</h3>
+            <p>體驗流暢的即時戰鬥系統，感受武俠世界的刀光劍影</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💕</div>
+            <h3>情緣系統</h3>
+            <p>邂逅紅顏知己，共譜一段動人的仙俠愛情故事</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏔️</div>
+            <h3>開放世界</h3>
+            <p>探索廣闊的仙俠世界，發現隱藏的秘境與寶藏</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <h3>修仙養成</h3>
+            <p>修煉各種仙法，提升實力，踏上成仙之路</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 角色介紹 -->
+    <section id="characters" class="characters-section">
+      <div class="container">
+        <h2 class="section-title">角色介紹</h2>
+        <div class="character-carousel">
+          <button class="carousel-btn prev-btn" id="charPrevBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+          </button>
+          <div class="characters-container">
+            <div class="characters-wrapper" id="charactersWrapper">
+              <div class="character-card">
+                <div class="character-card-inner">
+                  <img src="images/character1.png" alt="地藏" loading="lazy" />
+                  <div class="character-info">
+                    <h3>地藏</h3>
+                    <p>天真善良的仙女，擁有治癒之力</p>
+                  </div>
+                </div>
+              </div>
+              <div class="character-card">
+                <div class="character-card-inner">
+                  <img src="images/character2.png" alt="神策" loading="lazy" />
+                  <div class="character-info">
+                    <h3>神策</h3>
+                    <p>劍術超群的俊美少年，正義感十足</p>
+                  </div>
+                </div>
+              </div>
+              <div class="character-card">
+                <div class="character-card-inner">
+                  <img src="images/character3.png" alt="龍吟" loading="lazy" />
+                  <div class="character-info">
+                    <h3>龍吟</h3>
+                    <p>神秘莫測的暗影殺手，行蹤詭秘</p>
+                  </div>
+                </div>
+              </div>
+              <div class="character-card">
+                <div class="character-card-inner">
+                  <img src="images/character4.png" alt="靈霄" loading="lazy" />
+                  <div class="character-info">
+                    <h3>靈霄</h3>
+                    <p>音律之道的修行者，琴聲能攝人心魄</p>
+                  </div>
+                </div>
+              </div>
+              <div class="character-card">
+                <div class="character-card-inner">
+                  <img src="images/character5.png" alt="琉璃" loading="lazy" />
+                  <div class="character-info">
+                    <h3>琉璃</h3>
+                    <p>劍道巔峰的修煉者，萬劍歸宗</p>
+                  </div>
+                </div>
+              </div>
+              <div class="character-card">
+                <div class="character-card-inner">
+                  <img
+                    src="images/character6.png"
+                    alt="靈狐仙師"
+                    loading="lazy"
+                  />
+                  <div class="character-info">
+                    <h3>靈狐仙師</h3>
+                    <p>化形狐妖，精通幻術與咒法</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn next-btn" id="charNextBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="9,18 15,12 9,6"></polyline>
+            </svg>
+          </button>
+        </div>
+        <!-- 角色輪播指示器 -->
+        <div class="carousel-indicators character-indicators">
+          <span class="indicator active" data-slide="0"></span>
+          <span class="indicator" data-slide="1"></span>
+          <span class="indicator" data-slide="2"></span>
+          <span class="indicator" data-slide="3"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 遊戲圖片 -->
+    <section id="screenshots" class="screenshots-section">
+      <div class="container">
+        <h2 class="section-title">遊戲圖片</h2>
+        <div class="screenshot-carousel">
+          <button class="carousel-btn prev-btn" id="prevBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+          </button>
+          <div class="screenshots-container">
+            <div class="screenshots-wrapper" id="screenshotsWrapper">
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot1.jpg"
+                  alt="戰鬥畫面"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>金蘭結義</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot2.jpg"
+                  alt="美麗場景"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>跨服BOSS</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot3.jpg"
+                  alt="角色互動"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>五行</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot4.jpg"
+                  alt="技能展示"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>歸墟</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot5.jpg"
+                  alt="戰鬥畫面2"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>情緣</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot6.jpg"
+                  alt="美麗場景2"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>領域</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot7.jpg"
+                  alt="角色互動2"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>鴻蒙</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot8.jpg"
+                  alt="技能展示2"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>神技</h4>
+                </div>
+              </div>
+              <div class="screenshot-item">
+                <img
+                  src="images/screenshot9.jpg"
+                  alt="新功能展示"
+                  loading="lazy"
+                />
+                <div class="screenshot-overlay">
+                  <h4>創新玩法</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn next-btn" id="nextBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="9,18 15,12 9,6"></polyline>
+            </svg>
+          </button>
+        </div>
+        <!-- 輪播指示器 -->
+        <div class="carousel-indicators screenshot-indicators">
+          <span class="indicator active" data-slide="0"></span>
+          <span class="indicator" data-slide="1"></span>
+          <span class="indicator" data-slide="2"></span>
+          <span class="indicator" data-slide="3"></span>
+          <span class="indicator" data-slide="4"></span>
+          <span class="indicator" data-slide="5"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- YouTube 影片區域 -->
+    <section id="videos" class="videos-section">
+      <div class="container">
+        <h2 class="section-title">精彩影片</h2>
+        <div class="videos-grid">
+          <div class="video-item">
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/72dnsL5HK08"
+                title="遊戲預告片"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <h4>遊戲預告片</h4>
+            <p>體驗天穹劍域的精彩世界</p>
+          </div>
+          <div class="video-item">
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/YKU9ZVGdjsU"
+                title="遊戲玩法介紹"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <h4>遊戲玩法介紹</h4>
+            <p>深入了解遊戲核心玩法</p>
+          </div>
+          <div class="video-item">
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/XONEvhpCrh4"
+                title="角色技能展示"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <h4>角色技能展示</h4>
+            <p>各職業華麗技能一覽</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 下載區域 -->
+    <section id="download" class="download-section">
+      <div class="container">
+        <div class="download-content">
+          <h2>立即開始你的仙俠之旅</h2>
+          <p>加入數百萬玩家，在天穹劍域中書寫屬於你的傳奇</p>
+          <div class="download-options">
+            <a href="#" class="download-link ios">
+              <img src="images/app-store-badge.png" alt="APP STORE 下載" />
+            </a>
+            <a href="#" class="download-link android">
+              <img src="images/google-play-badge.png" alt="Google Play下載" />
+            </a>
+            <a href="#" class="download-link pc">
+              <img src="images/pc-download-badge.png" alt="PC版下載" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>遊戲信息</h4>
+            <ul>
+              <li><a href="#">遊戲介紹</a></li>
+              <li><a href="#">系統需求</a></li>
+              <li><a href="#">用戶協議</a></li>
+              <li><a href="#">隱私政策</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>客戶服務</h4>
+            <ul>
+              <li><a href="#">常見問題</a></li>
+              <li><a href="#">聯繫我們</a></li>
+              <li><a href="#">意見反饋</a></li>
+              <li><a href="#">技術支持</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>關注我們</h4>
+            <div class="social-links">
+              <a href="#" class="social-link">微博</a>
+              <a href="#" class="social-link">微信</a>
+              <a href="#" class="social-link">QQ群</a>
+              <a href="#" class="social-link">Discord</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 夢遊紅塵. 版權所有.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
