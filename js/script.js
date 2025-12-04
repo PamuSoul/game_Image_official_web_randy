@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 初始化所有功能
     initNavigation();
     initScrollEffects();
+    initPlatformButtons();
 
     // 動態載入內容
     Promise.all([
@@ -312,6 +313,51 @@ function initScrollEffects() {
         observer.observe(section);
     });
 }
+
+// 平台按鈕（iOS / Android）行為初始化
+function initPlatformButtons() {
+    const iosBtn = document.querySelector('.ios-btn');
+    const androidBtn = document.querySelector('.android-btn');
+    const bottomIosLink = document.querySelector('.download-link.ios');
+    const bottomAndroidLink = document.querySelector('.download-link.android');
+    const targetUrl = 'https://newcps.gtuiguang.com/tgljPreview/previewPage.html?gameId=DOtZ1Rr04EhX7XXu1Qy_6Q&autoIndex=bUTeI3Gi6qm4JsqOv_Kstw';
+
+    function openTarget(e) {
+        // 在新分頁開啟，並使用 noopener 防止 window.opener 攻擊
+        window.open(targetUrl, '_blank', 'noopener');
+    }
+
+    // 綁定頁面上現有的下載按鈕（上方按鈕）
+    if (iosBtn) {
+        iosBtn.style.cursor = 'pointer';
+        iosBtn.addEventListener('click', openTarget);
+    }
+
+    if (androidBtn) {
+        androidBtn.style.cursor = 'pointer';
+        androidBtn.addEventListener('click', openTarget);
+    }
+
+    // 綁定頁面底部下載區塊的連結（如果是 <a>，更新 href 與屬性以在無 JS 時也可工作）
+    if (bottomIosLink) {
+        try {
+            bottomIosLink.setAttribute('href', targetUrl);
+            bottomIosLink.setAttribute('target', '_blank');
+            bottomIosLink.setAttribute('rel', 'noopener noreferrer');
+            bottomIosLink.style.cursor = 'pointer';
+        } catch (e) {}
+    }
+
+    if (bottomAndroidLink) {
+        try {
+            bottomAndroidLink.setAttribute('href', targetUrl);
+            bottomAndroidLink.setAttribute('target', '_blank');
+            bottomAndroidLink.setAttribute('rel', 'noopener noreferrer');
+            bottomAndroidLink.style.cursor = 'pointer';
+        } catch (e) {}
+    }
+}
+
 
 // 角色輪播功能
 function initCharacterShowcase() {
@@ -901,6 +947,9 @@ function showDownloadModal() {
         </div>
     `;
 
+    // 導向目標 URL（供彈窗內 iOS/Android 使用）
+    const targetUrl = 'https://newcps.gtuiguang.com/tgljPreview/previewPage.html?gameId=DOtZ1Rr04EhX7XXu1Qy_6Q&autoIndex=bUTeI3Gi6qm4JsqOv_Kstw';
+
     // 添加樣式
     const style = document.createElement('style');
     style.textContent = `
@@ -1013,7 +1062,12 @@ function showDownloadModal() {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const platform = e.currentTarget.getAttribute('data-platform');
-            handleDownload(platform);
+            // iOS / Android 在彈窗內直接導向目標頁面（新分頁），PC 保持原本下載流程
+            if (platform === 'ios' || platform === 'android') {
+                window.open(targetUrl, '_blank', 'noopener');
+            } else {
+                handleDownload(platform);
+            }
             closeModal();
         });
     });
